@@ -32,7 +32,8 @@ jobs:
         run: |
           dart --version
           echo "---"
-          if (-not ("$($env:FLUTTER_ROOT\bin\cache\dart-sdk\bin\dart.exe --version)" -match "3\.10\.4")) {
+          $dartVersion = dart --version
+          if ($dartVersion -notmatch "3\.10\.4") {
             echo "ERROR: Dart SDK version mismatch"
             exit 1
           }
