@@ -20,9 +20,23 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.38.5'
+          cache: true
 
       - name: Verify Flutter installation
-        run: flutter doctor -v
+        run: |
+          flutter --version
+          echo "---"
+          flutter doctor -v
+
+      - name: Verify Dart SDK version
+        run: |
+          dart --version
+          echo "---"
+          if (-not ("$($env:FLUTTER_ROOT\bin\cache\dart-sdk\bin\dart.exe --version)" -match "3\.10\.4")) {
+            echo "ERROR: Dart SDK version mismatch"
+            exit 1
+          }
+          echo "Dart SDK version verified: 3.10.4"
 
       - name: Get dependencies
         run: flutter pub get
